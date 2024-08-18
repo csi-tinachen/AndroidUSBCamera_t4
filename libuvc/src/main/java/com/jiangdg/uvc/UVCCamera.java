@@ -50,8 +50,8 @@ public class UVCCamera {
 	public static final int DEFAULT_PREVIEW_MAX_FPS = 31;
 	public static final float DEFAULT_BANDWIDTH = 1.0f;
 
-	public static final int FRAME_FORMAT_YUYV = 0;
-	public static final int FRAME_FORMAT_MJPEG = 1;
+	public static final int FRAME_FORMAT_UNCOMPRESSED = 0;
+	public static final int FRAME_FORMAT_COMPRESSED = 1;
 
 	public static final int PIXEL_FORMAT_RAW = 0;
 	public static final int PIXEL_FORMAT_YUV = 1;
@@ -126,7 +126,7 @@ public class UVCCamera {
 	private UsbControlBlock mCtrlBlock;
     protected long mControlSupports;			// カメラコントロールでサポートしている機能フラグ
     protected long mProcSupports;				// プロセッシングユニットでサポートしている機能フラグ
-    protected int mCurrentFrameFormat = FRAME_FORMAT_MJPEG;
+    protected int mCurrentFrameFormat = FRAME_FORMAT_UNCOMPRESSED;
 	protected int mCurrentWidth = 640, mCurrentHeight = 480;
 	protected float mCurrentBandwidthFactor = DEFAULT_BANDWIDTH;
     protected String mSupportedSize;
@@ -312,7 +312,7 @@ public class UVCCamera {
 	 * Set preview size and preview mode
 	 * @param width
 	 * @param height
-	 * @param frameFormat either FRAME_FORMAT_YUYV(0) or FRAME_FORMAT_MJPEG(1)
+	 * @param frameFormat either FRAME_FORMAT_UNCOMPRESSED(0) or FRAME_FORMAT_COMPRESSED(1)
 	 */
 	public void setPreviewSize(final int width, final int height, final int frameFormat) {
 		setPreviewSize(width, height, DEFAULT_PREVIEW_MIN_FPS, DEFAULT_PREVIEW_MAX_FPS, frameFormat, mCurrentBandwidthFactor);
@@ -322,7 +322,7 @@ public class UVCCamera {
 	 * Set preview size and preview mode
 	 * @param width
 	   @param height
-	   @param frameFormat either FRAME_FORMAT_YUYV(0) or FRAME_FORMAT_MJPEG(1)
+	   @param frameFormat either FRAME_FORMAT_UNCOMPRESSED(0) or FRAME_FORMAT_COMPRESSED(1)
 	   @param bandwidth [0.0f,1.0f]
 	 */
 	public void setPreviewSize(final int width, final int height, final int frameFormat, final float bandwidth) {
@@ -335,7 +335,7 @@ public class UVCCamera {
 	 * @param height
 	 * @param min_fps
 	 * @param max_fps
-	 * @param frameFormat either FRAME_FORMAT_YUYV(0) or FRAME_FORMAT_MJPEG(1)
+	 * @param frameFormat either FRAME_FORMAT_UNCOMPRESSED(0) or FRAME_FORMAT_COMPRESSED(1)
 	 * @param bandwidthFactor
 	 */
 	public void setPreviewSize(final int width, final int height, final int min_fps, final int max_fps, final int frameFormat, final float bandwidthFactor) {

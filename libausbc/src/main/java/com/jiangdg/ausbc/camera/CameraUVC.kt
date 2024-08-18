@@ -80,7 +80,7 @@ class CameraUVC(ctx: Context, device: UsbDevice) : MultiCameraClient.ICamera(ctx
         if (mUvcCamera?.supportedSizeList?.isNotEmpty() == true) {
             mUvcCamera?.supportedSizeList
         }  else {
-            mUvcCamera?.getSupportedSizeList(UVCCamera.FRAME_FORMAT_YUYV)
+            mUvcCamera?.getSupportedSizeList(UVCCamera.FRAME_FORMAT_UNCOMPRESSED)
         }?.let { sizeList ->
             if (mCameraPreviewSize.isEmpty()) {
                 mCameraPreviewSize.clear()
@@ -151,7 +151,7 @@ class CameraUVC(ctx: Context, device: UsbDevice) : MultiCameraClient.ICamera(ctx
                 previewSize.height,
                 MIN_FS,
                 MAX_FPS,
-                UVCCamera.FRAME_FORMAT_MJPEG,
+                UVCCamera.FRAME_FORMAT_COMPRESSED,
                 UVCCamera.DEFAULT_BANDWIDTH
             )
         } catch (e: Exception) {
@@ -172,7 +172,7 @@ class CameraUVC(ctx: Context, device: UsbDevice) : MultiCameraClient.ICamera(ctx
                     previewSize.height,
                     MIN_FS,
                     MAX_FPS,
-                    UVCCamera.FRAME_FORMAT_YUYV,
+                    UVCCamera.FRAME_FORMAT_UNCOMPRESSED,
                     UVCCamera.DEFAULT_BANDWIDTH
                 )
             } catch (e: Exception) {
