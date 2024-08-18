@@ -214,12 +214,12 @@ uvc_error_t uvc_duplicate_frame(uvc_frame_t *in, uvc_frame_t *out) {
 	}
 #define RGB2RRRX_2(prgb, prgbx, ax, bx) { \
 		(prgbx)[bx+0] = (prgb)[ax+0]; \
-		(prgbx)[bx+1] = (prgb)[ax+1]; \
-		(prgbx)[bx+2] = (prgb)[ax+2]; \
+		(prgbx)[bx+1] = (prgb)[ax+0]; \
+		(prgbx)[bx+2] = (prgb)[ax+0]; \
 		(prgbx)[bx+3] = 0xff; \
 		(prgbx)[bx+4] = (prgb)[ax+3]; \
-		(prgbx)[bx+5] = (prgb)[ax+4]; \
-		(prgbx)[bx+6] = (prgb)[ax+5]; \
+		(prgbx)[bx+5] = (prgb)[ax+3]; \
+		(prgbx)[bx+6] = (prgb)[ax+3]; \
 		(prgbx)[bx+7] = 0xff; \
 	}
 #define RGB2RGBX_16(prgb, prgbx, ax, bx) \
