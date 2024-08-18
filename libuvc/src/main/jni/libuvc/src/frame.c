@@ -228,8 +228,8 @@ uvc_error_t uvc_duplicate_frame(uvc_frame_t *in, uvc_frame_t *out) {
  * @param out RGBX8888 frame
  */
 uvc_error_t uvc_rgb2rgbx(uvc_frame_t *in, uvc_frame_t *out) {
-	if (UNLIKELY(in->frame_format != UVC_FRAME_FORMAT_RGB))
-		return UVC_ERROR_INVALID_PARAM;
+	// if (UNLIKELY(in->frame_format != UVC_FRAME_FORMAT_RGB))
+	// 	return UVC_ERROR_INVALID_PARAM;
 
 	if (UNLIKELY(uvc_ensure_frame_size(out, in->width * in->height * PIXEL_RGBX) < 0))
 		return UVC_ERROR_NO_MEM;
@@ -1330,6 +1330,8 @@ uvc_error_t uvc_any2rgbx(uvc_frame_t *in, uvc_frame_t *out) {
 	case UVC_FRAME_FORMAT_RGBX:
 		return uvc_duplicate_frame(in, out);
 	case UVC_FRAME_FORMAT_RGB:
+		return uvc_rgb2rgbx(in, out);
+	case UVC_FRAME_FORMAT_BGR:
 		return uvc_rgb2rgbx(in, out);
 	default:
 		return UVC_ERROR_NOT_SUPPORTED;

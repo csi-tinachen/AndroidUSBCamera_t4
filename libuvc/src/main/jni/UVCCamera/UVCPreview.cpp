@@ -517,8 +517,16 @@ int UVCPreview::prepare_preview(uvc_stream_ctrl_t *ctrl) {
 			frameWidth = requestWidth;
 			frameHeight = requestHeight;
 		}
+
+		// Support BGR pixel format
+		if (mPixelFormat == PIXEL_FORMAT_YUV) {
+			frameBytes = frameWidth * frameHeight * 2;
+		} else if (mPixelFormat == PIXEL_FORMAT_BGR) {
+			frameBytes = frameWidth * frameHeight * 3;
+		}
+
 		frameMode = requestMode;
-		frameBytes = frameWidth * frameHeight * (!requestMode ? 2 : 4);
+		// frameBytes = frameWidth * frameHeight * (!requestMode ? 2 : 4);
 		previewBytes = frameWidth * frameHeight * PREVIEW_PIXEL_BYTES;
 	} else {
 		LOGE("could not negotiate with camera:err=%d", result);
