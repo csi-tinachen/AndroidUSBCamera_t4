@@ -212,6 +212,16 @@ uvc_error_t uvc_duplicate_frame(uvc_frame_t *in, uvc_frame_t *out) {
 		(prgbx)[bx+6] = (prgb)[ax+5]; \
 		(prgbx)[bx+7] = 0xff; \
 	}
+#define RGB2RRRX_2(prgb, prgbx, ax, bx) { \
+		(prgbx)[bx+0] = (prgb)[ax+0]; \
+		(prgbx)[bx+1] = (prgb)[ax+1]; \
+		(prgbx)[bx+2] = (prgb)[ax+2]; \
+		(prgbx)[bx+3] = 0xff; \
+		(prgbx)[bx+4] = (prgb)[ax+3]; \
+		(prgbx)[bx+5] = (prgb)[ax+4]; \
+		(prgbx)[bx+6] = (prgb)[ax+5]; \
+		(prgbx)[bx+7] = 0xff; \
+	}
 #define RGB2RGBX_16(prgb, prgbx, ax, bx) \
 	RGB2RGBX_8(prgb, prgbx, ax, bx) \
 	RGB2RGBX_8(prgb, prgbx, ax + PIXEL8_RGB, bx +PIXEL8_RGBX);
@@ -221,6 +231,12 @@ uvc_error_t uvc_duplicate_frame(uvc_frame_t *in, uvc_frame_t *out) {
 #define RGB2RGBX_4(prgb, prgbx, ax, bx) \
 	RGB2RGBX_2(prgb, prgbx, ax, bx) \
 	RGB2RGBX_2(prgb, prgbx, ax + PIXEL2_RGB, bx + PIXEL2_RGBX);
+#define RGB2RRRX_8(prgb, prgbx, ax, bx) \
+	RGB2RRRX_4(prgb, prgbx, ax, bx) \
+	RGB2RRRX_4(prgb, prgbx, ax + PIXEL4_RGB, bx + PIXEL4_RGBX);
+#define RGB2RRRX_4(prgb, prgbx, ax, bx) \
+	RGB2RRRX_2(prgb, prgbx, ax, bx) \
+	RGB2RRRX_2(prgb, prgbx, ax + PIXEL2_RGB, bx + PIXEL2_RGBX);
 
 /** @brief Convert a frame from RGB888 to RGBX8888
  * @ingroup frame
@@ -259,7 +275,7 @@ uvc_error_t uvc_rgb2rgbx(uvc_frame_t *in, uvc_frame_t *out) {
 			prgb = in->data + in->step * h;
 			prgbx = out->data + out->step * h;
 			for (; (prgbx <= prgbx_end) && (prgb <= prgb_end) && (w < ww) ;) {
-				RGB2RGBX_8(prgb, prgbx, 0, 0);
+				RGB2RRRX_8(prgb, prgbx, 0, 0);
 
 				prgb += PIXEL8_RGB;
 				prgbx += PIXEL8_RGBX;
@@ -269,7 +285,7 @@ uvc_error_t uvc_rgb2rgbx(uvc_frame_t *in, uvc_frame_t *out) {
 	} else {
 		// compressed format? XXX if only one of the frame in / out has step, this may lead to crash...
 		for (; (prgbx <= prgbx_end) && (prgb <= prgb_end) ;) {
-			RGB2RGBX_8(prgb, prgbx, 0, 0);
+			RGB2RRRX_8(prgb, prgbx, 0, 0);
 
 			prgb += PIXEL8_RGB;
 			prgbx += PIXEL8_RGBX;
@@ -277,7 +293,7 @@ uvc_error_t uvc_rgb2rgbx(uvc_frame_t *in, uvc_frame_t *out) {
 	}
 #else
 	for (; (prgbx <= prgbx_end) && (prgb <= prgb_end) ;) {
-		RGB2RGBX_8(prgb, prgbx, 0, 0);
+		RGB2RRRX_8(prgb, prgbx, 0, 0);
 
 		prgb += PIXEL8_RGB;
 		prgbx += PIXEL8_RGBX;
